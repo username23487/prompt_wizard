@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Eggapps Prompt Sihirbazı</title>
+  <meta name="description" content="Etkileşimli Chatbot Prompt Sihirbazı. Tek blok prompt, OpenAI messages JSON ve Claude uyumlu çıktı üretimi." />
+  <meta name="author" content="Eggapps" />
+  <meta property="og:site_name" content="Eggapps" />
+  <meta property="og:title" content="Eggapps Prompt Sihirbazı" />
+  <meta property="og:description" content="Tarayıcıda prompt oluştur, kopyala/indir. Tek blok, OpenAI JSON, Claude." />
+  <link rel="icon" href="assets/eggapps-logo.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <img src="assets/eggapps-logo.svg" alt="Eggapps" class="logo-img" />
+      <h1>Eggapps Prompt Sihirbazı</h1>
+    </div>
+    <div class="header-actions">
+      <a class="btn ghost" href="https://github.com/username23487/prompt_wizard" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card form-card">
+      <h2>Form</h2>
+      <form id="wizard-form">
+        <div class="form-grid">
+          <div class="field">
+            <label for="title">Başlık (opsiyonel)</label>
+            <input id="title" type="text" placeholder="Örn: Ürün gereksinimi sihirbazı" />
+          </div>
+
+          <div class="field">
+            <label for="objective">Amaç / Görev</label>
+            <textarea id="objective" rows="3" placeholder="Bu prompt ne yapsın? (Gerekli)"></textarea>
+          </div>
+
+          <div class="field">
+            <label for="role_persona">Rol / Persona</label>
+            <input id="role_persona" type="text" placeholder="Örn: Deneyimli ürün yöneticisi ve titiz teknik yazar" />
+          </div>
+
+          <div class="field">
+            <label for="audience">Hedef kitle</label>
+            <input id="audience" type="text" placeholder="Örn: Başlangıç seviyesi yazılımcılar" />
+          </div>
+
+          <div class="two-col">
+            <div class="field">
+              <label for="language">Yanıt dili</label>
+              <input id="language" type="text" value="Türkçe" />
+            </div>
+            <div class="field">
+              <label for="tone">Ton</label>
+              <select id="tone">
+                <option>Samimi ama profesyonel</option>
+                <option>Resmi</option>
+                <option>Nötr</option>
+                <option>Öğretici</option>
+                <option>Cesaretlendirici</option>
+                <option>Mizahi (dozunda)</option>
+                <option>Kısa ve net</option>
+                <option>Akademik</option>
+                <option>Hikâye anlatımı odaklı</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Üslup / Biçim</label>
+            <div class="chips">
+              <label><input type="checkbox" name="style" value="Adım adım" checked /> Adım adım</label>
+              <label><input type="checkbox" name="style" value="Madde işaretli" checked /> Madde işaretli</label>
+              <label><input type="checkbox" name="style" value="Özet + detay" /> Özet + detay</label>
+              <label><input type="checkbox" name="style" value="Kod ağırlıklı" /> Kod ağırlıklı</label>
+              <label><input type="checkbox" name="style" value="Tablo kullan" /> Tablo kullan</label>
+              <label><input type="checkbox" name="style" value="Soru-cevap" /> Soru-cevap</label>
+              <label><input type="checkbox" name="style" value="Örnek odaklı" /> Örnek odaklı</label>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="field">
+              <label for="output_format">Çıktı formatı</label>
+              <select id="output_format">
+                <option>Markdown</option>
+                <option>Düz metin</option>
+                <option>JSON</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="length_pref">Yaklaşık uzunluk</label>
+              <select id="length_pref">
+                <option>Orta</option>
+                <option>Kısa</option>
+                <option>Uzun</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <label class="switch">
+              <input id="ask_clar" type="checkbox" checked />
+              <span>Belirsizse önce netleştirici soru sor</span>
+            </label>
+            <label class="switch">
+              <input id="include_reasoning" type="checkbox" />
+              <span>Adım adım planla/akıl yürüt</span>
+            </label>
+          </div>
+
+          <details class="block">
+            <summary>Bağlam ve Veri</summary>
+            <div class="field">
+              <label for="context">Bağlam/Bilgi</label>
+              <textarea id="context" rows="3" placeholder="Ek arka plan bilgisi..."></textarea>
+            </div>
+            <div class="field">
+              <label for="input_data">Girdi/Veri</label>
+              <textarea id="input_data" rows="3" placeholder="Modelin kullanacağı ham veriler/örnekler..."></textarea>
+            </div>
+          </details>
+
+          <details class="block">
+            <summary>Kısıtlar ve Kaçınılacaklar</summary>
+            <div class="two-col">
+              <div class="field">
+                <label for="constraints">Kısıtlar/Kurallar (satır satır)</label>
+                <textarea id="constraints" rows="4" placeholder="Örn: Jargon kullanma&#10;Cevap 500 kelimeyi geçmesin"></textarea>
+              </div>
+              <div class="field">
+                <label for="do_not_list">Yapma/Kaçın (satır satır)</label>
+                <textarea id="do_not_list" rows="4" placeholder="Örn: Gizli bilgileri ifşa etme&#10;Varsayım üretme"></textarea>
+              </div>
+            </div>
+          </details>
+
+          <details class="block">
+            <summary>Kaynakça ve Araçlar</summary>
+            <div class="two-col">
+              <label class="switch">
+                <input id="references_required" type="checkbox" />
+                <span>Kaynak/bağlantı isteniyor</span>
+              </label>
+              <div class="field">
+                <label for="references_style">Kaynak stili</label>
+                <input id="references_style" type="text" placeholder="Bağlantı (URL) ver, kaynağın güvenilirliğini belirt" />
+              </div>
+            </div>
+            <div class="field">
+              <label>Araçlar/Kabiliyetler</label>
+              <div class="chips">
+                <label><input type="checkbox" name="tools" value="Tarayıcı/Browse" /> Tarayıcı/Browse</label>
+                <label><input type="checkbox" name="tools" value="Kod çalıştırma" /> Kod çalıştırma</label>
+                <label><input type="checkbox" name="tools" value="Tablo/CSV okuma" /> Tablo/CSV okuma</label>
+                <label><input type="checkbox" name="tools" value="Veri analizi" /> Veri analizi</label>
+              </div>
+            </div>
+          </details>
+
+          <details class="block">
+            <summary>Format talimatı, Kabul kriteri, Kalite kontrol</summary>
+            <div class="field">
+              <label for="explicit_format_instructions">Çıktı biçim talimatları (özellikle JSON için)</label>
+              <textarea id="explicit_format_instructions" rows="3" placeholder='Örn: Yanıtı geçerli JSON ver. Alanlar: ["title","steps","notes"].'></textarea>
+            </div>
+            <div class="two-col">
+              <div class="field">
+                <label for="acceptance_criteria">Kabul kriterleri (satır satır)</label>
+                <textarea id="acceptance_criteria" rows="4"></textarea>
+              </div>
+              <div class="field">
+                <label for="quality_checklist">Kalite kontrol maddeleri (satır satır; boşsa varsayılan)</label>
+                <textarea id="quality_checklist" rows="4"></textarea>
+              </div>
+            </div>
+            <div class="field">
+              <label for="additional_instructions">Ek talimatlar</label>
+              <textarea id="additional_instructions" rows="3"></textarea>
+            </div>
+          </details>
+
+          <details class="block">
+            <summary>Few-shot örnekler</summary>
+            <div id="examples"></div>
+            <button type="button" class="btn small" id="add-example">+ Örnek ekle</button>
+          </details>
+
+          <div class="field">
+            <label for="target_platform">Hedef platform/çıktı türü (önizleme için hepsi üretilecek)</label>
+            <select id="target_platform">
+              <option>Genel</option>
+              <option>OpenAI (system+user)</option>
+              <option>Claude/Anthropic (tek prompt)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="btn" id="generate">Önizlemeyi Güncelle</button>
+          <button type="button" class="btn ghost" id="reset">Temizle</button>
+          <span class="muted" id="status"></span>
+        </div>
+      </form>
+    </section>
+
+    <section class="card output-card">
+      <h2>Çıktılar</h2>
+
+      <div class="output-block">
+        <div class="output-header">
+          <h3>Tek Blok Prompt</h3>
+          <div class="output-actions">
+            <button class="btn small" data-copy="#single-block-output">Kopyala</button>
+            <button class="btn small ghost" data-download="#single-block-output" data-ext="md">.md indir</button>
+          </div>
+        </div>
+        <pre class="code"><code id="single-block-output"></code></pre>
+      </div>
+
+      <div class="output-block">
+        <div class="output-header">
+          <h3>OpenAI messages (JSON)</h3>
+          <div class="output-actions">
+            <button class="btn small" data-copy="#openai-json-output">Kopyala</button>
+            <button class="btn small ghost" data-download="#openai-json-output" data-ext="json">.json indir</button>
+          </div>
+        </div>
+        <pre class="code"><code id="openai-json-output"></code></pre>
+      </div>
+
+      <div class="output-block">
+        <div class="output-header">
+          <h3>Claude tek prompt</h3>
+          <div class="output-actions">
+            <button class="btn small" data-copy="#claude-output">Kopyala</button>
+            <button class="btn small ghost" data-download="#claude-output" data-ext="txt">.txt indir</button>
+          </div>
+        </div>
+        <pre class="code"><code id="claude-output"></code></pre>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>© Eggapps 2025 • <span id="version">v1.0</span></span>
+  </footer>
+
+  <script defer src="app.js"></script>
+</body>
+</html>
