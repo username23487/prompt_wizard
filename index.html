@@ -4,18 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Eggapps Prompt Sihirbazı</title>
-  <meta name="description" content="Etkileşimli Chatbot Prompt Sihirbazı. Tek blok prompt, OpenAI messages JSON ve Claude uyumlu çıktı üretimi." />
+  <meta name="description" content="Etkileşimli Chatbot Prompt Sihirbazı. Tek blok prompt, OpenAI messages JSON ve Türkçe Claude çıktısı." />
   <meta name="author" content="Eggapps" />
   <meta property="og:site_name" content="Eggapps" />
   <meta property="og:title" content="Eggapps Prompt Sihirbazı" />
-  <meta property="og:description" content="Tarayıcıda prompt oluştur, kopyala/indir. Tek blok, OpenAI JSON, Claude." />
+  <meta property="og:description" content="Tarayıcıda prompt oluştur, kopyala/indir. Tek blok, OpenAI JSON, Claude (TR)." />
 
-  <!-- Opsiyonel güzel font -->
+  <!-- Opsiyonel font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <!-- CSS (inline) -->
   <style>
     :root{
       --bg-1:#0b0f19; --bg-2:#0f172a; --card:#121a2a; --card-2:#121e36;
@@ -55,12 +54,11 @@
       border:1px solid var(--border); border-radius:16px;
       padding:18px 16px 14px; box-shadow:var(--shadow-lg);
     }
-    h1,h2,h3{margin:6px 0 12px} h2{font-size:20px} h3{font-size:16px}
+    h1,h2,h3{margin:6px 0 12px} h2{font-size:20px} h3{font-size:15px; color:#d9e3f4}
 
     .form-grid{display:grid; gap:14px}
     .two-col{display:grid; gap:12px; grid-template-columns:1fr 1fr}
     @media (max-width:680px){ .two-col{grid-template-columns:1fr} }
-
     .field{display:flex; flex-direction:column; gap:6px}
     label{color:var(--muted); font-weight:600}
 
@@ -85,12 +83,7 @@
       cursor:pointer; user-select:none; color:#dbe6ff;
       transition:transform .12s ease, border-color .2s, background .2s;
     }
-    /* Checkbox görünümü ve renk */
-    .chips input{
-      appearance:auto; width:16px; height:16px; margin:0 2px 0 0;
-      accent-color: var(--primary);
-    }
-    /* Seçilince görsel vurgular */
+    .chips input{appearance:auto; width:16px; height:16px; margin:0 2px 0 0; accent-color:var(--primary)}
     .chips label.active{
       border-color: rgba(255,209,102,.65);
       background: linear-gradient(180deg, #1a2244, #151c34);
@@ -101,17 +94,6 @@
 
     .switch{display:flex; align-items:center; gap:10px; cursor:pointer; color:#dbe6ff}
     .switch input{width:18px; height:18px; accent-color:var(--primary)}
-
-    details.block{
-      background:linear-gradient(180deg, #101734, #0f1429);
-      border:1px dashed var(--border); border-radius:12px; padding:10px 12px;
-    }
-    details.block[open]{border-style:solid}
-    details.block summary{
-      cursor:pointer; font-weight:700; color:var(--primary-2);
-      list-style:none; outline:none; margin:2px 0 8px;
-    }
-    details.block summary::-webkit-details-marker{display:none}
 
     .actions{display:flex; align-items:center; gap:10px; margin-top:8px; flex-wrap:wrap}
     .btn{
@@ -149,7 +131,7 @@
 <body>
   <header class="site-header">
     <div class="brand">
-      <!-- İstersen emoji yerine logo kullan: <img src="assets/eggapps-logo.svg" alt="Eggapps" class="logo-img" /> -->
+      <!-- İstersen emoji yerine logo: <img src="assets/eggapps-logo.svg" alt="Eggapps" class="logo-img" /> -->
       <span class="logo-emoji">🥚</span>
       <h1>Eggapps Prompt Sihirbazı</h1>
     </div>
@@ -174,8 +156,8 @@
           </div>
 
           <div class="field">
-            <label for="role_persona">Rol / Persona</label>
-            <input id="role_persona" type="text" placeholder="Örn: Deneyimli ürün yöneticisi ve titiz teknik yazar" />
+            <label for="role_personal">Rol / Personal</label>
+            <input id="role_personal" type="text" placeholder="Örn: Deneyimli ürün yöneticisi ve titiz teknik yazar" />
           </div>
 
           <div class="field">
@@ -205,10 +187,19 @@
           </div>
 
           <div class="field">
+            <label for="language_level">Dil düzeyi</label>
+            <select id="language_level">
+              <option>Orta</option>
+              <option>Basit</option>
+              <option>İleri</option>
+            </select>
+          </div>
+
+          <div class="field">
             <label>Üslup / Biçim</label>
             <div class="chips" id="chips-style">
-              <label><input type="checkbox" name="style" value="Adım adım"><span>Adım adım</span></label>
-              <label><input type="checkbox" name="style" value="Madde işaretli"><span>Madde işaretli</span></label>
+              <label><input type="checkbox" name="style" value="Adım adım" checked><span>Adım adım</span></label>
+              <label><input type="checkbox" name="style" value="Madde işaretli" checked><span>Madde işaretli</span></label>
               <label><input type="checkbox" name="style" value="Özet + detay"><span>Özet + detay</span></label>
               <label><input type="checkbox" name="style" value="Kod ağırlıklı"><span>Kod ağırlıklı</span></label>
               <label><input type="checkbox" name="style" value="Tablo kullan"><span>Tablo kullan</span></label>
@@ -247,8 +238,8 @@
             </label>
           </div>
 
-          <details class="block">
-            <summary>Bağlam ve Veri</summary>
+          <h3>Bağlam ve Veri</h3>
+          <div class="two-col">
             <div class="field">
               <label for="context">Bağlam/Bilgi</label>
               <textarea id="context" rows="3" placeholder="Ek arka plan bilgisi..."></textarea>
@@ -257,75 +248,80 @@
               <label for="input_data">Girdi/Veri</label>
               <textarea id="input_data" rows="3" placeholder="Modelin kullanacağı ham veriler/örnekler..."></textarea>
             </div>
-          </details>
+          </div>
 
-          <details class="block">
-            <summary>Kısıtlar ve Kaçınılacaklar</summary>
-            <div class="two-col">
-              <div class="field">
-                <label for="constraints">Kısıtlar/Kurallar (satır satır)</label>
-                <textarea id="constraints" rows="4" placeholder="Örn: Jargon kullanma&#10;Cevap 500 kelimeyi geçmesin"></textarea>
-              </div>
-              <div class="field">
-                <label for="do_not_list">Yapma/Kaçın (satır satır)</label>
-                <textarea id="do_not_list" rows="4" placeholder="Örn: Gizli bilgileri ifşa etme&#10;Varsayım üretme"></textarea>
-              </div>
-            </div>
-          </details>
-
-          <details class="block">
-            <summary>Kaynakça ve Araçlar</summary>
-            <div class="two-col">
-              <label class="switch">
-                <input id="references_required" type="checkbox" />
-                <span>Kaynak/bağlantı isteniyor</span>
-              </label>
-              <div class="field">
-                <label for="references_style">Kaynak stili</label>
-                <input id="references_style" type="text" placeholder="Bağlantı (URL) ver, kaynağın güvenilirliğini belirt" />
-              </div>
+          <h3>Kısıtlar ve Kaçınılacaklar</h3>
+          <div class="two-col">
+            <div class="field">
+              <label for="constraints">Kısıtlar/Kurallar (satır satır)</label>
+              <textarea id="constraints" rows="4" placeholder="Örn: Jargon kullanma&#10;Cevap 500 kelimeyi geçmesin"></textarea>
             </div>
             <div class="field">
-              <label>Araçlar/Kabiliyetler</label>
-              <div class="chips">
-                <label><input type="checkbox" name="tools" value="Tarayıcı/Browse"><span>Tarayıcı/Browse</span></label>
-                <label><input type="checkbox" name="tools" value="Kod çalıştırma"><span>Kod çalıştırma</span></label>
-                <label><input type="checkbox" name="tools" value="Tablo/CSV okuma"><span>Tablo/CSV okuma</span></label>
-                <label><input type="checkbox" name="tools" value="Veri analizi"><span>Veri analizi</span></label>
-              </div>
+              <label for="do_not_list">Yapma/Kaçın (satır satır)</label>
+              <textarea id="do_not_list" rows="4" placeholder="Örn: Gizli bilgileri ifşa etme&#10;Varsayım üretme"></textarea>
             </div>
-          </details>
+          </div>
 
-          <details class="block">
-            <summary>Format talimatı, Kabul kriteri, Kalite kontrol</summary>
+          <h3>Ek Parametreler</h3>
+          <div class="two-col">
             <div class="field">
-              <label for="explicit_format_instructions">Çıktı biçim talimatları (özellikle JSON için)</label>
-              <textarea id="explicit_format_instructions" rows="3" placeholder='Örn: Yanıtı geçerli JSON ver. Alanlar: ["title","steps","notes"].'></textarea>
-            </div>
-            <div class="two-col">
-              <div class="field">
-                <label for="acceptance_criteria">Kabul kriterleri (satır satır)</label>
-                <textarea id="acceptance_criteria" rows="4"></textarea>
-              </div>
-              <div class="field">
-                <label for="quality_checklist">Kalite kontrol maddeleri (satır satır; boşsa varsayılan)</label>
-                <textarea id="quality_checklist" rows="4"></textarea>
-              </div>
+              <label for="keywords">Anahtar kelimeler (satır satır)</label>
+              <textarea id="keywords" rows="3" placeholder="örn: SEO, okunabilirlik, örneklerle anlatım"></textarea>
             </div>
             <div class="field">
-              <label for="additional_instructions">Ek talimatlar</label>
-              <textarea id="additional_instructions" rows="3"></textarea>
+              <label for="sections">İstenen bölümler/başlıklar (satır satır)</label>
+              <textarea id="sections" rows="3" placeholder="örn: Özet, Adımlar, Örnekler, Kontrol Listesi"></textarea>
             </div>
-          </details>
+          </div>
 
-          <details class="block">
-            <summary>Few-shot örnekler</summary>
-            <div id="examples"></div>
-            <button type="button" class="btn small" id="add-example">+ Örnek ekle</button>
-          </details>
+          <h3>Kaynakça ve Araçlar</h3>
+          <div class="two-col">
+            <label class="switch">
+              <input id="references_required" type="checkbox" />
+              <span>Kaynak/bağlantı isteniyor</span>
+            </label>
+            <div class="field">
+              <label for="references_style">Kaynak stili</label>
+              <input id="references_style" type="text" placeholder="Bağlantı (URL) ver, kaynağın güvenilirliğini belirt" />
+            </div>
+          </div>
+          <div class="field">
+            <label>Araçlar/Kabiliyetler</label>
+            <div class="chips">
+              <label><input type="checkbox" name="tools" value="Tarayıcı/Browse"><span>Tarayıcı/Browse</span></label>
+              <label><input type="checkbox" name="tools" value="Kod çalıştırma"><span>Kod çalıştırma</span></label>
+              <label><input type="checkbox" name="tools" value="Tablo/CSV okuma"><span>Tablo/CSV okuma</span></label>
+              <label><input type="checkbox" name="tools" value="Veri analizi"><span>Veri analizi</span></label>
+            </div>
+          </div>
+
+          <h3>Biçim talimatı ve Kalite</h3>
+          <div class="field">
+            <label for="explicit_format_instructions">Çıktı biçim talimatları (özellikle JSON için)</label>
+            <textarea id="explicit_format_instructions" rows="3" placeholder='Örn: Yanıtı geçerli JSON ver. Alanlar: ["title","steps","notes"].'></textarea>
+          </div>
+          <div class="two-col">
+            <div class="field">
+              <label for="acceptance_criteria">Kabul kriterleri (satır satır)</label>
+              <textarea id="acceptance_criteria" rows="4"></textarea>
+            </div>
+            <div class="field">
+              <label for="quality_checklist">Kalite kontrol maddeleri (satır satır; boşsa varsayılan)</label>
+              <textarea id="quality_checklist" rows="4"></textarea>
+            </div>
+          </div>
 
           <div class="field">
-            <label for="target_platform">Hedef platform/çıktı türü (önizleme için hepsi üretilecek)</label>
+            <label for="additional_instructions">Ek talimatlar</label>
+            <textarea id="additional_instructions" rows="3"></textarea>
+          </div>
+
+          <h3>Few-shot örnekler</h3>
+          <div id="examples"></div>
+          <button type="button" class="btn small" id="add-example">+ Örnek ekle</button>
+
+          <div class="field">
+            <label for="target_platform">Hedef platform/çıktı türü</label>
             <select id="target_platform">
               <option>Genel</option>
               <option>OpenAI (system+user)</option>
@@ -336,7 +332,7 @@
 
         <div class="actions">
           <button type="button" class="btn" id="generate">Önizlemeyi Güncelle</button>
-          <button type="button" class="btn ghost" id="reset">Temizle</button>
+          <button type="button" class="btn ghost" id="delete-all">Tümünü Sil (Delete All)</button>
           <span class="muted" id="status"></span>
         </div>
       </form>
@@ -369,7 +365,7 @@
 
       <div class="output-block">
         <div class="output-header">
-          <h3>Claude tek prompt</h3>
+          <h3>Claude tek prompt (Türkçe)</h3>
           <div class="output-actions">
             <button class="btn small" data-copy="#claude-output">Kopyala</button>
             <button class="btn small ghost" data-download="#claude-output" data-ext="txt">.txt indir</button>
@@ -381,113 +377,134 @@
   </main>
 
   <footer class="site-footer">
-    <span>© Eggapps 2025 • <span id="version">v1.0</span></span>
+    <span>© Eggapps 2025 • <span id="version">v1.1</span></span>
   </footer>
 
-  <!-- JS (inline) -->
   <script>
     const q=(s)=>document.querySelector(s);
     function val(id){ return document.getElementById(id).value.trim(); }
     function checked(name){ return Array.from(document.querySelectorAll('input[name="'+name+'"]:checked')).map(x=>x.value); }
-    function lines(t){ return t ? t.split("\n").map(s=>s.trim()).filter(Boolean) : []; }
+    function lines(t){ return t ? t.split("\\n").map(s=>s.trim()).filter(Boolean) : []; }
     function defaultQC(){ return ["Yanıt hedef kitleye uygun mu?","Talep edilen biçim ve uzunlukta mı?","Varsayımlar belirtilmiş ve belirsizlikler sorulmuş mu?","Somut, uygulanabilir çıktı içeriyor mu?"]; }
 
     function toSingleBlock(r){
       const parts=[];
       if(r.title) parts.push("# "+r.title);
-      parts.push("ROL/PERSONA:\n"+r.role_persona);
-      parts.push("AMAÇ:\n"+r.objective);
-      parts.push("HEDEF KİTLE ve DİL:\n- Hedef kitle: "+r.audience+"\n- Yanıt dili: "+r.language);
+      parts.push("ROL/PERSONAL:\\n"+r.role_personal);
+      parts.push("AMAÇ:\\n"+r.objective);
+      parts.push("HEDEF KİTLE ve DİL:\\n- Hedef kitle: "+r.audience+"\\n- Yanıt dili: "+r.language+"\\n- Dil düzeyi: "+(r.language_level||"—"));
       const styleStr=r.style.length?r.style.join(", "):"Uygun gördüğün biçim";
-      parts.push("TON ve ÜSLUP:\n- Ton: "+r.tone+"\n- Yazım/biçim: "+styleStr+"\n- Tercih edilen çıktı formatı: "+r.output_format+"\n- Yaklaşık uzunluk tercihi: "+r.length_pref);
-      if(r.tools.length) parts.push("ARAÇLAR/KABİLİYETLER:\n"+r.tools.join(", "));
-      if(r.context) parts.push("BAĞLAM/BİLGİ:\n"+r.context);
-      if(r.input_data) parts.push("GİRDİ/VERİ:\n"+r.input_data);
+      parts.push("TON ve ÜSLUP:\\n- Ton: "+r.tone+"\\n- Yazım/biçim: "+styleStr+"\\n- Tercih edilen çıktı formatı: "+r.output_format+"\\n- Yaklaşık uzunluk tercihi: "+r.length_pref);
+      if(r.tools.length) parts.push("ARAÇLAR/KABİLİYETLER:\\n"+r.tools.join(", "));
+      if(r.context) parts.push("BAĞLAM/BİLGİ:\\n"+r.context);
+      if(r.input_data) parts.push("GİRDİ/VERİ:\\n"+r.input_data);
+      if(r.keywords?.length) parts.push("ANAHTAR KELİMELER:\\n- "+r.keywords.join("\\n- "));
+      if(r.sections?.length) parts.push("İSTENEN BÖLÜMLER/BAŞLIKLAR:\\n- "+r.sections.join("\\n- "));
       const proc=[];
       if(r.ask_clar) proc.push("Eğer görev/bağlam belirsizse önce en fazla 3 netleştirici soru sor.");
       if(r.include_reasoning) proc.push("Problemi çözmeden önce kısa bir plan yap ve çözümde adım adım ilerle.");
       else proc.push("Gerekmedikçe içsel akıl yürütmeyi gösterme; nihai sonucu açık ve somut ver.");
       proc.push("Yanıtta gereksiz tekrar ve dolgu yapma; öz ve eyleme dönük ol.");
-      parts.push("SÜREÇ/ÇALIŞMA BİÇİMİ:\n- "+proc.join("\n- "));
-      if(r.references_required) parts.push("KAYNAK/KAYNAKÇA:\n"+(r.references_style||"Bağlantı (URL) ver, kaynağın güvenilirliğini belirt"));
-      if(r.constraints.length) parts.push("KISITLAR/KURALLAR:\n- "+r.constraints.join("\n- "));
-      if(r.do_not_list.length) parts.push("YAPMA/KAÇIN:\n- "+r.do_not_list.join("\n- "));
-      if(r.explicit_format_instructions) parts.push("ÇIKTI BİÇİM TALİMATLARI:\n"+r.explicit_format_instructions);
+      parts.push("SÜREÇ/ÇALIŞMA BİÇİMİ:\\n- "+proc.join("\\n- "));
+      if(r.references_required) parts.push("KAYNAK/KAYNAKÇA:\\n"+(r.references_style||"Bağlantı (URL) ver, kaynağın güvenilirliğini belirt"));
+      if(r.constraints.length) parts.push("KISITLAR/KURALLAR:\\n- "+r.constraints.join("\\n- "));
+      if(r.do_not_list.length) parts.push("YAPMA/KAÇIN:\\n- "+r.do_not_list.join("\\n- "));
+      if(r.explicit_format_instructions) parts.push("ÇIKTI BİÇİM TALİMATLARI:\\n"+r.explicit_format_instructions);
       if(r.examples.length){
-        const ex=r.examples.map((e,i)=>"ÖRNEK "+(i+1)+" - GİRİŞ:\n"+e.input_text+"\nÖRNEK "+(i+1)+" - ÇIKIŞ:\n"+e.output_text);
-        parts.push("FEW-SHOT ÖRNEKLER:\n"+ex.join("\n\n"));
+        const ex=r.examples.map((e,i)=>"ÖRNEK "+(i+1)+" - GİRİŞ:\\n"+e.input_text+"\\nÖRNEK "+(i+1)+" - ÇIKIŞ:\\n"+e.output_text);
+        parts.push("FEW-SHOT ÖRNEKLER:\\n"+ex.join("\\n\\n"));
       }
       const qc=r.quality_checklist.length?r.quality_checklist:defaultQC();
-      parts.push("KABUL KRİTERLERİ (yanıtın sağlaması gerekenler):\n- "+(r.acceptance_criteria.length?r.acceptance_criteria.join("\n- "):"—"));
-      parts.push("KALİTE KONTROL — Göndermeden önce kontrol et:\n- "+qc.join("\n- "));
-      if(r.additional_instructions) parts.push("EK TALİMATLAR:\n"+r.additional_instructions);
-      return parts.join("\n\n");
+      parts.push("KABUL KRİTERLERİ (yanıtın sağlaması gerekenler):\\n- "+(r.acceptance_criteria.length?r.acceptance_criteria.join("\\n- "):"—"));
+      parts.push("KALİTE KONTROL — Göndermeden önce kontrol et:\\n- "+qc.join("\\n- "));
+      if(r.additional_instructions) parts.push("EK TALİMATLAR:\\n"+r.additional_instructions);
+      return parts.join("\\n\\n");
     }
 
     function toOpenAIMessages(r){
       const systemLines=[];
-      systemLines.push("Rol/Persona: "+r.role_persona);
+      systemLines.push("Rol/Personal: "+r.role_personal);
       systemLines.push("Hedef kitle: "+r.audience);
-      systemLines.push("Dil: "+r.language);
+      systemLines.push("Dil: "+r.language+" (Düzey: "+(r.language_level||"—")+")");
       systemLines.push("Ton: "+r.tone);
       const styleStr=r.style.length?r.style.join(", "):"Uygun gördüğün biçim";
       systemLines.push("Üslup: "+styleStr);
       if(r.tools.length) systemLines.push("Araçlar/kabiliyetler: "+r.tools.join(", "));
-      if(r.constraints.length) systemLines.push("Kurallar:\n- "+r.constraints.join("\n- "));
-      if(r.do_not_list.length) systemLines.push("Kaçın:\n- "+r.do_not_list.join("\n- "));
+      if(r.constraints.length) systemLines.push("Kurallar:\\n- "+r.constraints.join("\\n- "));
+      if(r.do_not_list.length) systemLines.push("Kaçın:\\n- "+r.do_not_list.join("\\n- "));
       if(r.references_required) systemLines.push("Kaynakça politikası: "+(r.references_style||"Bağlantı (URL) ver, kaynağın güvenilirliğini belirt"));
       if(r.additional_instructions) systemLines.push("Ek talimatlar: "+r.additional_instructions);
 
       const userLines=[];
       userLines.push("Amaç/Görev: "+r.objective);
-      if(r.context) userLines.push("Bağlam:\n"+r.context);
-      if(r.input_data) userLines.push("Girdi/Veri:\n"+r.input_data);
+      if(r.context) userLines.push("Bağlam:\\n"+r.context);
+      if(r.input_data) userLines.push("Girdi/Veri:\\n"+r.input_data);
+      if(r.keywords?.length) userLines.push("Anahtar kelimeler:\\n- "+r.keywords.join("\\n- "));
+      if(r.sections?.length) userLines.push("İstenen bölümler/başlıklar:\\n- "+r.sections.join("\\n- "));
       if(r.ask_clar) userLines.push("Belirsizse önce en fazla 3 netleştirici soru sor.");
       if(r.include_reasoning) userLines.push("Planını kısaca yap ve adım adım ilerle.");
       else userLines.push("Gerekmedikçe içsel akıl yürütmeyi gösterme; net sonuca odaklan.");
       userLines.push("Çıktı formatı: "+r.output_format+". Uzunluk: "+r.length_pref+".");
-      if(r.explicit_format_instructions) userLines.push("Çıktı biçim talimatları:\n"+r.explicit_format_instructions);
-      if(r.acceptance_criteria.length) userLines.push("Kabul kriterleri:\n- "+r.acceptance_criteria.join("\n- "));
+      if(r.explicit_format_instructions) userLines.push("Çıktı biçim talimatları:\\n"+r.explicit_format_instructions);
+      if(r.acceptance_criteria.length) userLines.push("Kabul kriterleri:\\n- "+r.acceptance_criteria.join("\\n- "));
       if(r.examples.length){
-        const ex=r.examples.map((e,i)=>"[Örnek "+(i+1)+" — Girdi]\n"+e.input_text+"\n[Örnek "+(i+1)+" — Çıktı]\n"+e.output_text);
-        userLines.push("Örnekler:\n"+ex.join("\n\n"));
+        const ex=r.examples.map((e,i)=>"[Örnek "+(i+1)+" — Girdi]\\n"+e.input_text+"\\n[Örnek "+(i+1)+" — Çıktı]\\n"+e.output_text);
+        userLines.push("Örnekler:\\n"+ex.join("\\n\\n"));
       }
-      return [{role:"system",content:systemLines.join("\n")},{role:"user",content:userLines.join("\n\n")}];
+      return [{role:"system",content:systemLines.join("\\n")},{role:"user",content:userLines.join("\\n\\n")}];
     }
 
+    // Türkçe Claude tek prompt
     function toClaudePrompt(r){
       const styleStr=r.style.length?r.style.join(", "):"Uygun gördüğün biçim";
-      let header=`You are: ${r.role_persona}\nAudience: ${r.audience}\nLanguage: ${r.language}\nTone: ${r.tone}\nStyle: ${styleStr}\n`;
+      let header =
+`Rol: ${r.role_personal}
+Hedef kitle: ${r.audience}
+Dil: ${r.language} (Düzey: ${r.language_level||"—"})
+Ton: ${r.tone}
+Üslup: ${styleStr}
+`;
       let rules="";
-      if(r.constraints.length) rules+="Rules:\n- "+r.constraints.join("\n- ")+"\n";
-      if(r.do_not_list.length) rules+="Avoid:\n- "+r.do_not_list.join("\n- ")+"\n";
-      if(r.references_required) rules+=`References: ${r.references_style||"Provide URLs and mention source credibility"}\n`;
-      const proc=[];
-      if(r.ask_clar) proc.push("If unclear, ask up to 3 clarifying questions first.");
-      if(r.include_reasoning) proc.push("Plan briefly and proceed step-by-step.");
-      else proc.push("Do not expose chain-of-thought; provide final answers.");
-      proc.push("Output format: "+r.output_format+", Length: "+r.length_pref+".");
-      if(r.explicit_format_instructions) proc.push("Formatting Instructions:\n"+r.explicit_format_instructions);
+      if(r.constraints.length) rules += "Kurallar:\\n- " + r.constraints.join("\\n- ") + "\\n";
+      if(r.do_not_list.length) rules += "Kaçın:\\n- " + r.do_not_list.join("\\n- ") + "\\n";
+      if(r.references_required) rules += "Kaynakça politikası: " + (r.references_style||"Bağlantı (URL) ver, kaynağın güvenilirliğini belirt") + "\\n";
 
-      let body=`Objective:\n${r.objective}\n\n`;
-      if(r.context) body+=`Context:\n${r.context}\n\n`;
-      if(r.input_data) body+=`Input Data:\n${r.input_data}\n\n`;
+      const proc=[];
+      if(r.ask_clar) proc.push("Belirsizse önce en fazla 3 netleştirici soru sor.");
+      if(r.include_reasoning) proc.push("Kısa bir plan yap ve adım adım ilerle.");
+      else proc.push("İç düşünce zincirini paylaşma; doğrudan, net sonuç ver.");
+      proc.push("Çıktı biçimi: "+r.output_format+", Uzunluk: "+r.length_pref+".");
+      if(r.explicit_format_instructions) proc.push("Biçim talimatları:\\n"+r.explicit_format_instructions);
+
+      let body = "Amaç:\\n"+r.objective+"\\n\\n";
+      if(r.context) body += "Bağlam:\\n"+r.context+"\\n\\n";
+      if(r.input_data) body += "Girdi/Veri:\\n"+r.input_data+"\\n\\n";
+      if(r.keywords?.length) body += "Anahtar kelimeler:\\n- "+r.keywords.join("\\n- ")+"\\n\\n";
+      if(r.sections?.length) body += "İstenen bölümler/başlıklar:\\n- "+r.sections.join("\\n- ")+"\\n\\n";
+
       if(r.examples.length){
-        const ex=r.examples.map((e,i)=>`Example ${i+1} — Input:\n${e.input_text}\nExample ${i+1} — Output:\n${e.output_text}`);
-        body+="Few-shot Examples:\n"+ex.join("\n\n")+"\n\n";
+        const ex=r.examples.map((e,i)=>`Örnek ${i+1} — Girdi:
+${e.input_text}
+Örnek ${i+1} — Çıktı:
+${e.output_text}`);
+        body += "Few-shot Örnekler:\\n" + ex.join("\\n\\n") + "\\n\\n";
       }
-      const qc=r.quality_checklist?.length?r.quality_checklist:["Meets format and length","Suited to audience","Concrete and actionable"];
-      body+="Quality Checklist (self-check before finalizing):\n- "+qc.join("\n- ")+"\n";
-      return header+rules+proc.join("\n")+"\n\n"+body;
+
+      const qc = r.quality_checklist?.length ? r.quality_checklist
+                  : ["Biçim ve uzunluğa uyum","Hedef kitleye uygunluk","Somut ve uygulanabilir öneriler"];
+      body += "Kalite Kontrol (sonlandırmadan önce):\\n- " + qc.join("\\n- ") + "\\n";
+
+      return header + rules + proc.join("\\n") + "\\n\\n" + body;
     }
 
     function collectRecipe(){
       return {
         title: val("title"),
-        role_persona: val("role_persona"),
+        role_personal: val("role_personal"),
         objective: val("objective"),
         audience: val("audience"),
         language: val("language") || "Türkçe",
+        language_level: document.getElementById("language_level").value,
         tone: document.getElementById("tone").value,
         style: checked("style"),
         output_format: document.getElementById("output_format").value,
@@ -501,6 +518,8 @@
         tools: checked("tools"),
         context: val("context"),
         input_data: val("input_data"),
+        keywords: lines(val("keywords")),
+        sections: lines(val("sections")),
         explicit_format_instructions: val("explicit_format_instructions"),
         acceptance_criteria: lines(val("acceptance_criteria")),
         quality_checklist: lines(val("quality_checklist")),
@@ -513,8 +532,8 @@
       };
     }
 
-    function setCode(sel,text){ const el=q(sel); if(el) el.textContent=text; }
-    function setStatus(msg){ const s=document.getElementById("status"); s.textContent=msg; if(!msg) return; setTimeout(()=>{s.textContent=""},2000); }
+    function setCode(sel,text){ const el=q(sel); if(el) el.textContent=text||""; }
+    function setStatus(msg){ const s=document.getElementById("status"); s.textContent=msg||""; if(!msg) return; setTimeout(()=>{s.textContent=""},2000); }
 
     function updateChipActive(){
       document.querySelectorAll(".chips label").forEach(lbl=>{
@@ -559,24 +578,29 @@
 
     function copyFrom(selector){
       const text=document.querySelector(selector).textContent;
+      if(!text) return;
       navigator.clipboard.writeText(text).then(()=> setStatus("Kopyalandı ✔"));
     }
     function downloadFrom(selector, ext){
       const text=document.querySelector(selector).textContent;
       const nameBase=(document.getElementById("title").value || document.getElementById("objective").value || "prompt")
-        .toLowerCase().replace(/[^a-z0-9ğüşöçıİĞÜŞÖÇ\s-]/gi,"").replace(/\s+/g,"-").slice(0,60) || "prompt";
+        .toLowerCase().replace(/[^a-z0-9ğüşöçıİĞÜŞÖÇ\\s-]/gi,"").replace(/\\s+/g,"-").slice(0,60) || "prompt";
       const ts=new Date().toISOString().replace(/[-:T]/g,"").slice(0,15);
-      const fileName=`${nameBase}_${ts}.${ext}`;
+      const fileName=\`\${nameBase}_\${ts}.\${ext}\`;
       const blob=new Blob([text],{type:"text/plain;charset=utf-8"});
       const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=fileName;
       document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(a.href);
-      setStatus(`${fileName} indirildi ✔`);
+      setStatus(\`\${fileName} indirildi ✔\`);
     }
-    function resetForm(){
+
+    function deleteAll(){
+      // Form + örnekler + çıktılar + localStorage
       document.getElementById("wizard-form").reset();
       document.getElementById("examples").innerHTML="";
       localStorage.removeItem("promptWizardState");
-      render();
+      ["#single-block-output","#openai-json-output","#claude-output"].forEach(sel=> setCode(sel,""));
+      updateChipActive();
+      setStatus("Her şey temizlendi ✔");
     }
 
     // Eventler
@@ -587,58 +611,64 @@
       if(dbtn) downloadFrom(dbtn.getAttribute("data-download"), dbtn.getAttribute("data-ext"));
     });
     document.getElementById("generate").addEventListener("click", render);
-    document.getElementById("reset").addEventListener("click", resetForm);
+    document.getElementById("delete-all").addEventListener("click", deleteAll);
     document.getElementById("add-example").addEventListener("click", ()=> addExample());
-
-    // Form değiştikçe otomatik render + chip highlight
     document.addEventListener("input",(e)=>{
-      if(e.target.matches("input, textarea, select")){ updateChipActive(); render(); }
+      if(e.target.matches("input, textarea, select")){ updateChipActive(); }
     });
     document.addEventListener("change",(e)=>{
-      if(e.target.matches("input, textarea, select")){ updateChipActive(); render(); }
+      if(e.target.matches("input, textarea, select")){ updateChipActive(); }
     });
 
-    // Auto-load state
+    // Auto-load (eski kayıtlardan "role_persona" → "role_personal" geçişi)
     (function init(){
       try{
         const saved=localStorage.getItem("promptWizardState");
         if(saved){
           const r=JSON.parse(saved);
           const set=(id,v)=>{ const el=document.getElementById(id); if(el) el.value=v ?? ""; };
-          set("title", r.title); set("role_persona", r.role_persona); set("objective", r.objective);
-          set("audience", r.audience); set("language", r.language);
-          document.getElementById("tone").value=r.tone || "Samimi ama profesyonel";
+          set("title", r.title);
+          set("role_personal", r.role_personal || r.role_persona || "");
+          set("objective", r.objective);
+          set("audience", r.audience);
+          set("language", r.language);
+          document.getElementById("language_level").value = r.language_level || "Orta";
+          document.getElementById("tone").value = r.tone || "Samimi ama profesyonel";
           (r.style||[]).forEach(s=>{
-            const cbs=[...document.querySelectorAll('input[name="style"]')];
-            const cb=cbs.find(x=>x.value===s); if(cb) cb.checked=true;
+            const cb=[...document.querySelectorAll('input[name="style"]')].find(x=>x.value===s);
+            if(cb) cb.checked=true;
           });
           document.getElementById("output_format").value=r.output_format || "Markdown";
           document.getElementById("length_pref").value=r.length_pref || "Orta";
           document.getElementById("ask_clar").checked=!!r.ask_clar;
           document.getElementById("include_reasoning").checked=!!r.include_reasoning;
-          set("constraints", (r.constraints||[]).join("\n"));
-          set("do_not_list", (r.do_not_list||[]).join("\n"));
+          set("constraints", (r.constraints||[]).join("\\n"));
+          set("do_not_list", (r.do_not_list||[]).join("\\n"));
           document.getElementById("references_required").checked=!!r.references_required;
           set("references_style", r.references_style);
           (r.tools||[]).forEach(t=>{
-            const cbs=[...document.querySelectorAll('input[name="tools"]')];
-            const cb=cbs.find(x=>x.value===t); if(cb) cb.checked=true;
+            const cb=[...document.querySelectorAll('input[name="tools"]')].find(x=>x.value===t);
+            if(cb) cb.checked=true;
           });
-          set("context", r.context); set("input_data", r.input_data);
+          set("context", r.context);
+          set("input_data", r.input_data);
+          set("keywords", (r.keywords||[]).join("\\n"));
+          set("sections", (r.sections||[]).join("\\n"));
           set("explicit_format_instructions", r.explicit_format_instructions);
-          set("acceptance_criteria", (r.acceptance_criteria||[]).join("\n"));
-          set("quality_checklist", (r.quality_checklist||[]).join("\n"));
+          set("acceptance_criteria", (r.acceptance_criteria||[]).join("\\n"));
+          set("quality_checklist", (r.quality_checklist||[]).join("\\n"));
           (r.examples||[]).forEach(e=> addExample(e.input_text, e.output_text));
           set("additional_instructions", r.additional_instructions);
           document.getElementById("target_platform").value=r.target_platform || "Genel";
+        } else {
+          // Varsayılan iki stil seçili gelsin
+          document.querySelectorAll('input[name="style"]').forEach(inp=>{
+            if(["Adım adım","Madde işaretli"].includes(inp.value)) inp.checked=true;
+          });
         }
       }catch(e){ console.warn("State load failed", e); }
-      // Varsayılan iki stil seçili gelsin
-      const defaults=["Adım adım","Madde işaretli"];
-      document.querySelectorAll('input[name="style"]').forEach(inp=>{
-        if(defaults.includes(inp.value)) inp.checked = (inp.checked || true);
-      });
       updateChipActive();
+      // Otomatik ilk render (boş formu yansıtır)
       render();
     })();
   </script>
