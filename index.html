@@ -19,7 +19,10 @@
     :root{
       --bg-1:#0b0f19; --bg-2:#0f172a; --card:#121a2a; --card-2:#121e36;
       --border:rgba(255,255,255,0.08); --muted:#9aa4b2; --text:#e8eef7;
-      --primary:#ffd166; --primary-2:#ffe08a; --code:#0a1020; --ok:#40c057;
+      /* Sarı -> Yeşil */
+      --primary:#40c057;        /* yeşil */
+      --primary-2:#69db7c;      /* açık yeşil */
+      --code:#0a1020; --ok:#40c057;
       --shadow-lg:0 14px 38px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.02);
     }
     *{box-sizing:border-box} html,body{height:100%}
@@ -70,8 +73,8 @@
     textarea{resize:vertical; min-height:44px}
     input::placeholder, textarea::placeholder{color:#75819a}
     input:focus, select:focus, textarea:focus{
-      border-color:rgba(255,209,102,.6);
-      box-shadow:0 0 0 3px rgba(255,209,102,.18);
+      border-color:rgba(64,192,87,.6);             /* yeşil vurgular */
+      box-shadow:0 0 0 3px rgba(64,192,87,.18);
     }
 
     /* Chips */
@@ -85,9 +88,9 @@
     }
     .chips input{appearance:auto; width:16px; height:16px; margin:0 2px 0 0; accent-color:var(--primary)}
     .chips label.active{
-      border-color: rgba(255,209,102,.65);
-      background: linear-gradient(180deg, #1a2244, #151c34);
-      box-shadow: inset 0 0 0 1px rgba(255,209,102,.25);
+      border-color: rgba(64,192,87,.65);
+      background: linear-gradient(180deg, #163c2b, #132c22);
+      box-shadow: inset 0 0 0 1px rgba(64,192,87,.25);
       transform: translateY(-1px);
     }
     .chips input:checked + span{ font-weight:700 }
@@ -97,9 +100,9 @@
 
     .actions{display:flex; align-items:center; gap:10px; margin-top:8px; flex-wrap:wrap}
     .btn{
-      background:linear-gradient(180deg, var(--primary), #f9c64d);
+      background:linear-gradient(180deg, var(--primary), #51cf66); /* yeşil degrade */
       color:#1b1b1b; border:none; border-radius:12px; padding:10px 14px; cursor:pointer; font-weight:700;
-      box-shadow:0 6px 16px rgba(255,209,102,.25); transition:transform .12s ease, filter .2s, box-shadow .2s;
+      box-shadow:0 6px 16px rgba(64,192,87,.25); transition:transform .12s ease, filter .2s, box-shadow .2s;
     }
     .btn:hover{transform:translateY(-1px); filter:brightness(.98)}
     .btn:active{transform:translateY(0) scale(.99)}
@@ -131,7 +134,6 @@
 <body>
   <header class="site-header">
     <div class="brand">
-      <!-- İstersen emoji yerine logo: <img src="assets/eggapps-logo.svg" alt="Eggapps" class="logo-img" /> -->
       <span class="logo-emoji">🥚</span>
       <h1>Eggapps Prompt Sihirbazı</h1>
     </div>
@@ -454,7 +456,6 @@
       return [{role:"system",content:systemLines.join("\\n")},{role:"user",content:userLines.join("\\n\\n")}];
     }
 
-    // Türkçe Claude tek prompt
     function toClaudePrompt(r){
       const styleStr=r.style.length?r.style.join(", "):"Uygun gördüğün biçim";
       let header =
@@ -613,14 +614,16 @@ ${e.output_text}`);
     document.getElementById("generate").addEventListener("click", render);
     document.getElementById("delete-all").addEventListener("click", deleteAll);
     document.getElementById("add-example").addEventListener("click", ()=> addExample());
+
+    // Form değiştikçe otomatik önizleme (tekrar açtım)
     document.addEventListener("input",(e)=>{
-      if(e.target.matches("input, textarea, select")){ updateChipActive(); }
+      if(e.target.matches("input, textarea, select")){ updateChipActive(); render(); }
     });
     document.addEventListener("change",(e)=>{
-      if(e.target.matches("input, textarea, select")){ updateChipActive(); }
+      if(e.target.matches("input, textarea, select")){ updateChipActive(); render(); }
     });
 
-    // Auto-load (eski kayıtlardan "role_persona" → "role_personal" geçişi)
+    // Auto-load + ilk render
     (function init(){
       try{
         const saved=localStorage.getItem("promptWizardState");
@@ -661,15 +664,13 @@ ${e.output_text}`);
           set("additional_instructions", r.additional_instructions);
           document.getElementById("target_platform").value=r.target_platform || "Genel";
         } else {
-          // Varsayılan iki stil seçili gelsin
           document.querySelectorAll('input[name="style"]').forEach(inp=>{
             if(["Adım adım","Madde işaretli"].includes(inp.value)) inp.checked=true;
           });
         }
       }catch(e){ console.warn("State load failed", e); }
       updateChipActive();
-      // Otomatik ilk render (boş formu yansıtır)
-      render();
+      render(); // sayfa açılışında anında çıktı üret
     })();
   </script>
 </body>
